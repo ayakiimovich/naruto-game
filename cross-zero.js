@@ -18,6 +18,12 @@ let board = [
     ['', '', ''],
     ['', '', '']];
 
+let cells = [
+    [b1, b2, b3],
+    [b4, b5, b6],
+    [b7, b8, b9]];
+
+
 let isFirstClick = true;
 let isGameOver = false;
 
@@ -46,6 +52,7 @@ function click(b, i, j) {
     } else if (currentPlayer == '0') {
         currentPlayer = 'X';
     }
+    setTimeout(makeBot, 1000)
 }
 
 function img (b, currentPlayer) {
@@ -74,6 +81,25 @@ b7.addEventListener('click', () => click(b7, 2, 0));
 b8.addEventListener('click', () => click(b8, 2, 1));
 b9.addEventListener('click', () => click(b9, 2, 2));
 
+function makeBot() {
+    if (currentPlayer === '0') {
+        const emptyCells = [];
+        for(let i = 0; i < board.length; i++) {
+            for(let j = 0; j < board[i].length; j++) {
+                if(board[i][j] === '') {
+                    emptyCells.push({
+                        boardCell: cells[i][j],
+                        row: i, 
+                        column: j
+                    });
+                }
+            }
+        }
+        const randomIndex = Math.floor(Math.random() * emptyCells.length);
+        const botCell = emptyCells[randomIndex];
+        click(botCell.boardCell, botCell.row, botCell.column);
+    }
+}
 
 function checkPlayerWin(player) {
     //горизонталь
