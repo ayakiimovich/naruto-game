@@ -10,23 +10,57 @@ const b9 = document.getElementById('b9');
 
 const message = document.getElementById('message');
 
+// const image = document.getElementById('xwon');
+
 let currentPlayer = 'X';
 let board = [
     ['', '', ''],
     ['', '', ''],
     ['', '', '']];
 
+let isFirstClick = true;
+let isGameOver = false;
+
 function click(b, i, j) {
-    b.innerHTML = currentPlayer;
+    if (board[i][j] !== '') {
+        return;
+    }
+    if(isGameOver) {
+        return;
+    }
+
+    img(b, currentPlayer);
     board[i][j] = currentPlayer;
+
+    if (isFirstClick) {
+        isFirstClick = false;
+        audioClick();
+    }
 
     checkPlayerWin('X');
     checkPlayerWin('0');
+    checkDraw();
 
     if (currentPlayer == 'X') {
         currentPlayer = '0';
     } else if (currentPlayer == '0') {
         currentPlayer = 'X';
+    }
+}
+
+function img (b, currentPlayer) {
+    if (currentPlayer == 'X') {
+        var img = new Image();
+        img.src = 'sasuke.jpg';
+        img.width = 80;
+        img.height = 80;
+        b.appendChild(img);
+    } else if (currentPlayer == '0') {
+        var img = new Image();
+        img.src = 'uzumaki2.jpg';
+        img.width = 80;
+        img.height = 80;
+        b.appendChild(img);
     }
 }
 
@@ -40,29 +74,60 @@ b7.addEventListener('click', () => click(b7, 2, 0));
 b8.addEventListener('click', () => click(b8, 2, 1));
 b9.addEventListener('click', () => click(b9, 2, 2));
 
+
 function checkPlayerWin(player) {
     //горизонталь
     for(let i = 0; i<3; i++) {
         if(board[i][0] == player && board[i][1] == player && board[i][2] == player) {
-            message.innerHTML = `Player ${player} won`;
+            playerWon(player);
             return;
-        }
+        } 
     }
     //вертикаль
     for(let i = 0; i<3; i++) {
         if(board[0][i] == player && board[1][i] == player && board[2][i] == player) {
-            message.innerHTML = `Player ${player} won`;
+            playerWon(player);
             return;
         }
     }
     //диагональ
     if(board[0][0] == player && board[1][1] == player && board[2][2] == player) {
-        message.innerHTML = `Player ${player} won`;
+        playerWon(player);
         return;
     }
     if(board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-        message.innerHTML = `Player ${player} won`;
+        playerWon(player);
         return;
+    } 
+}
+
+function playerWon(player) {
+    message.innerHTML = `${player} won`;
+    if (player == 'X') {
+        var img = new Image();
+        img.src = 'xwon.png';
+        img.setAttribute('id', 'xwon');
+        // img.style.width = 500;
+        // img.style.height = 'auto';
+        // img.style.position = 'fixed';
+        // img.style.top = 80; 
+        document.body.appendChild(img);
+    }
+    isGameOver = true;
+}
+
+function checkDraw() {
+    let step = 0;
+    for(let i = 0; i < board.length; i++) {
+        for(let j = 0; j < board[i].length; j++) {
+            if(board[i][j] != '') {
+                step++;
+            }
+        }
+    }
+    if (step >= 8) {
+        message.innerHTML = 'Try again!';
+        isGameOver = true;
     }
 }
 
@@ -76,5 +141,15 @@ function newGame() {
     for (let i = 1; i <= 9; i++) {
         document.getElementById(`b${i}`).innerHTML = '';
     }
+    isGameOver = false;
+    var image = document.getElementById('xwon');
+    image.parentNode.removeChild(image);
 }
 document.getElementById('new-game').addEventListener('click', newGame);
+
+function audioClick () {
+    var audio = new Audio();
+    audio.src = 'naruto.mp3';
+    audio.autoplay = true;
+}
+

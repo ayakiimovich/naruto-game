@@ -54,3 +54,26 @@ h1 {
                  13px 13px 1px rgba(0,0,0,0.5),
                  0px 0px 12px rgba(0,0,0,.2);
 }
+p {
+    color: #ff9407;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
+}
+#xwon {
+    width: 500px;
+    height: auto;
+    position: fixed;
+    top: 80px;
+    opacity: 0;
+    transition: 1s;
+    animation: show 4s 1;
+    animation-fill-mode: forwards;
+}
+@keyframes show {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
