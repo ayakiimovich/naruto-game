@@ -26,6 +26,7 @@ let cells = [
 
 let isFirstClick = true;
 let isGameOver = false;
+let isPlayerWin = false;
 
 function click(b, i, j) {
     if (board[i][j] !== '') {
@@ -52,7 +53,7 @@ function click(b, i, j) {
     } else if (currentPlayer == '0') {
         currentPlayer = 'X';
     }
-    setTimeout(makeBot, 1000)
+    setTimeout(makeBot, 500)
 }
 
 function img (b, currentPlayer) {
@@ -140,21 +141,24 @@ function playerWon(player) {
         document.body.appendChild(img);
     }
     isGameOver = true;
+    isPlayerWin = true;
 }
 
 function checkDraw() {
-    let step = 0;
-    for(let i = 0; i < board.length; i++) {
-        for(let j = 0; j < board[i].length; j++) {
-            if(board[i][j] != '') {
+   if(isPlayerWin != true) {
+        let step = 0;
+        for(let i = 0; i < board.length; i++) {
+            for(let j = 0; j < board[i].length; j++) {
+                if(board[i][j] != '') {
                 step++;
-            }
+                }
+             }
         }
-    }
     if (step >= 8) {
         message.innerHTML = 'Try again!';
         isGameOver = true;
     }
+ }
 }
 
 function newGame() {
