@@ -12,6 +12,8 @@ const message = document.getElementById('message');
 
 // const image = document.getElementById('xwon');
 
+let queryString = window.location.search;
+
 let currentPlayer = 'X';
 let board = [
     ['', '', ''],
@@ -53,7 +55,9 @@ function click(b, i, j) {
     } else if (currentPlayer == '0') {
         currentPlayer = 'X';
     }
-    setTimeout(makeBot, 500)
+    if (queryString === "?type=bot") {
+        setTimeout(makeBot, 500)
+    }
 }
 
 function img (b, currentPlayer) {

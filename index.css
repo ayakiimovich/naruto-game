@@ -1,0 +1,44 @@
+h1 {
+    font-size: 81px;
+    color: #ff9407;
+    font-family: Courier New;
+    text-shadow: 0px 0px 0 rgb(247,140,0),
+                 1px 1px 0 rgb(239,132,0),
+                 2px 2px 0 rgb(231,124,0),
+                 3px 3px 0 rgb(223,116,0),
+                 4px 4px 0 rgb(215,108,0),
+                 5px 5px 0 rgb(207,100,0),
+                 6px 6px 0 rgb(198,91,0),
+                 7px 7px 0 rgb(190,83,0),
+                 8px 8px 0 rgb(182,75,0),
+                 9px 9px 0 rgb(174,67,0),
+                 10px 10px 0 rgb(166,59,0),
+                 11px 11px 0 rgb(158,51,0),
+                 12px 12px  0 rgb(150,43,0),
+                 13px 13px 12px rgba(0,0,0,1),
+                 13px 13px 1px rgba(0,0,0,0.5),
+                 0px 0px 12px rgba(0,0,0,.2);
+}
+a {
+    display: inline;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 45%;
+    background-color: rgb(231,124,0);
+	border-radius:28px;
+	border:1px solid #120e0e;
+    cursor:pointer;
+	color:#181313;
+	font-family: Courier New;
+	font-weight:bold;
+	padding:16px 45px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #080808;
+}
+#bot {
+    top: 30%;
+}
+#twoPl {
+    top: 60%;
+}
