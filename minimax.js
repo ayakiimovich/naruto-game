@@ -10,8 +10,6 @@ const b9 = document.getElementById('b9');
 
 const message = document.getElementById('message');
 
-// const image = document.getElementById('xwon');
-
 let queryString = window.location.search;
 
 let currentPlayer = 'X';
@@ -41,6 +39,7 @@ function click(b, i, j) {
     img(b, currentPlayer);
     board[i][j] = currentPlayer;
 
+    // включаем музыку при первом клике
     if (isFirstClick) {
         isFirstClick = false;
         audioClick();
@@ -48,19 +47,25 @@ function click(b, i, j) {
 
     checkPlayerWin('X');
     checkPlayerWin('0');
-    
+    playerWon(player);
     checkDraw();
 
+    // поочерёдность хода
     if (currentPlayer == 'X') {
         currentPlayer = '0';
     } else if (currentPlayer == '0') {
         currentPlayer = 'X';
     }
+    
+    // реакция на выбор игры с ботом
     if (queryString === "?type=bot") {
+        
+        // время перед ходом бота
         setTimeout(makeBot, 500)
     }
 }
 
+// крепим изображения на крестик и нолик
 function img (b, currentPlayer) {
     if (currentPlayer == 'X') {
         var img = new Image();
@@ -77,6 +82,7 @@ function img (b, currentPlayer) {
     }
 }
 
+// делаем тупого бота
 function makeBot() {
     if (currentPlayer === '0') {
         const emptyCells = [];
@@ -107,33 +113,30 @@ b7.addEventListener('click', () => click(b7, 2, 0));
 b8.addEventListener('click', () => click(b8, 2, 1));
 b9.addEventListener('click', () => click(b9, 2, 2));
 
-
 function checkPlayerWin(player) {
     //горизонталь
     for(let i = 0; i<3; i++) {
         if(board[i][0] == player && board[i][1] == player && board[i][2] == player) {
-            playerWon(player);
-            return;
+            return true;
         } 
     }
     //вертикаль
     for(let i = 0; i<3; i++) {
         if(board[0][i] == player && board[1][i] == player && board[2][i] == player) {
-            playerWon(player);
-            return;
+            return true;
         }
     }
     //диагональ
     if(board[0][0] == player && board[1][1] == player && board[2][2] == player) {
-        playerWon(player);
-        return;
+        return true;
     }
     if(board[0][2] == player && board[1][1] == player && board[2][0] == player) {
-        playerWon(player);
-        return;
+        return true;
     } 
+    return false;
 }
 
+// редачит html после победы
 function playerWon(player) {
     message.innerHTML = `${player} won`;
     if (player == 'X') {
@@ -150,23 +153,25 @@ function playerWon(player) {
     isPlayerWin = true;
 }
 
+// ничья
 function checkDraw() {
-   if(isPlayerWin != true) {
-        let step = 0;
-        for(let i = 0; i < board.length; i++) {
-            for(let j = 0; j < board[i].length; j++) {
-                if(board[i][j] != '') {
-                step++;
-                }
-             }
-        }
-    if (step >= 8) {
-        message.innerHTML = 'Try again!';
-        isGameOver = true;
-    }
+    if(isPlayerWin != true) {
+         let step = 0;
+         for(let i = 0; i < board.length; i++) {
+             for(let j = 0; j < board[i].length; j++) {
+                 if(board[i][j] != '') {
+                 step++;
+                 }
+              }
+         }
+     if (step >= 8) {
+         message.innerHTML = 'Try again!';
+         isGameOver = true;
+     }
+  }
  }
-}
 
+//  начинаем новую игру и всё подчищаем
 function newGame() {
     currentPlayer = 'X';
     board = [
@@ -183,8 +188,37 @@ function newGame() {
 }
 document.getElementById('new-game').addEventListener('click', newGame);
 
+// музыкальное сопровождение при первом клике
 function audioClick () {
     var audio = new Audio();
     audio.src = 'naruto.mp3';
     audio.autoplay = true;
+}
+
+// проверяет, пустая ли выбранная клетка
+function isEmpty(board, i, j) {
+    if (board[i][j] === "") {
+        return true;
+    }
+}
+
+function minimax(board, player) {
+    var availSpots = isEmpty(board, i, g);
+
+    if(checkPlayerWin(player)) {
+        return {score: -10};
+    } else if(checkDraw()) {
+        return {score: 0};
+    } else {
+        return {score: 10};
+    }
+
+    let moves = [];
+
+    for(let i = 0; i < availSpots.length; i++) {
+        for(let j = 0; j < availSpots[i].length; j++) {
+            let move = {};
+            move.inex = bo
+        }
+    }
 }
